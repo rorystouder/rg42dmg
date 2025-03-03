@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bbcb2txw6dt8h"]
+
+[ext_resource type="Script" path="res://scripts/space/bullet.gd" id="1_36bit"]
+
+[node name="Bullet" type="RigidBody3D"]
+script = ExtResource("1_36bit")
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="."]

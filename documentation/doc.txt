@@ -1,0 +1,35 @@
+project_root/
+├── scenes/                       # Directory for all scene files
+│   ├── space/                    # Space-related scenes
+│   │   ├── SpaceScene.tscn       # Main scene for space travel and battles
+│   │   ├── travel.tscn           # Optional: Focused on travel mechanics (e.g., navigation)
+│   │   └── battle.tscn           # Optional: Dedicated to space combat scenarios
+│   └── planet/                   # Planet-related scenes
+│       ├── PlanetScene.tscn      # Base scene for all planets, reusable template
+│       ├── earth.tscn            # Specific scene for Earth, extends PlanetScene.tscn
+│       ├── beta_ceti.tscn        # Specific scene for Beta Ceti, extends PlanetScene.tscn
+│       └── ...                   # Additional planet scenes as needed
+├── scripts/                      # Directory for all GDScript files
+│   ├── space/                    # Scripts specific to space gameplay
+│   │   ├── spaceship.gd          # Controls player spaceship movement and actions
+│   │   └── enemy_ai.gd           # Manages enemy ship behavior in space battles
+│   ├── planet/                   # Scripts specific to planet gameplay
+│   │   ├── player_controller.gd  # Handles player movement and interaction on planets
+│   │   └── mission_manager.gd    # Manages mission generation, tracking, and completion
+│   └── common/                   # Scripts shared across space and planet modes
+│       ├── inventory.gd          # Manages player inventory, usable in both environments
+│       ├── ui_manager.gd         # Updates UI elements based on current mode
+│       ├── game_state.gd         # Tracks global state (e.g., current scene, player object)
+│       └── faction_manager.gd    # Manages faction relationships and reputation
+├── assets/                       # Directory for all game assets
+���   ├── models/                   # 3D models for game objects
+│   │   ├── spaceship.glb         # Model for the player’s spaceship
+│   │   ├── character.glb         # Model for the player character on planets
+│   │   └── building.glb          # Generic building model for planet environments
+│   ├── textures/                 # Textures for models and UI
+│   │   ├── spaceship_diffuse.png # Diffuse texture for spaceship model
+│   │   └── terrain_grass.png     # Texture for planet terrain
+│   └── sounds/                   # Audio files for effects and ambiance
+│       ├── laser_shot.wav        # Sound for space combat weapons
+│       └── footsteps.wav         # Sound for walking on planets
+└── Main.tscn                     # Root scene with persistent UI and scene placeholder

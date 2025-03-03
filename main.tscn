@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://dxxk1dduhvsbx"]
+
+[node name="Main" type="Node"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HealthBar" type="ProgressBar" parent="CanvasLayer"]
+offset_right = 4.0
+offset_bottom = 27.0
+
+[node name="AmmoCounter" type="Label" parent="CanvasLayer"]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="MiniMap" type="TextureRect" parent="CanvasLayer"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="InventoryStatus" type="TextEdit" parent="CanvasLayer"]
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="GameScenePlaceholder" type="Node3D" parent="."]

@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://dlm1ixhdmfjpi"]
+
+[ext_resource type="Script" path="res://scripts/space/spaceship.gd" id="1_pe84t"]
+[ext_resource type="PackedScene" uid="uid://baphaxjrle3jt" path="res://scenes/space/EnemySpaceship.tscn" id="2_f4qe0"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_388p0"]
+
+[node name="SpaceScene" type="Node3D"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 10)
+
+[node name="Spaceship" type="CharacterBody3D" parent="."]
+script = ExtResource("1_pe84t")
+speed = null
+rotation_speed = null
+
+[node name="spaceship" type="MeshInstance3D" parent="Spaceship"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Spaceship"]
+shape = SubResource("SphereShape3D_388p0")
+
+[node name="EnemySpaceship" parent="." instance=ExtResource("2_f4qe0")]
+
+[node name="EnemySpaceship2" parent="." instance=ExtResource("2_f4qe0")]
+
+[node name="EnemySpaceship3" parent="." instance=ExtResource("2_f4qe0")]

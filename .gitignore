@@ -1,0 +1,12 @@
+# Godot-specific ignores
+*.import
+*.log
+*.tmp
+import/
+export/
+*.mono # If using C# in Godot
+# OS-specific files
+.DS_Store  # macOS
+Thumbs.db  # Windows
+.godot/
+/android/
