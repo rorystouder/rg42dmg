@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://csb21b20lek54"]
+
+[node name="Planet" type="Node3D"]
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="SphereShape3D" type="CollisionShape3D" parent="Area3D"]

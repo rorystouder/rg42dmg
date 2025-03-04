@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://llnbdw80e38t"]
+
+[ext_resource type="PackedScene" uid="uid://bauqut1wy1qdp" path="res://scenes/planet/old/PlanetScene.tscn" id="1_iv0o7"]
+
+[node name="TauCeti3" type="Node3D"]
+
+[node name="PlanetScene" parent="." instance=ExtResource("1_iv0o7")]

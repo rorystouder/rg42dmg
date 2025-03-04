@@ -1,7 +1,7 @@
 @tool
 extends EditorScript
 
-# Planet data with all 12 planets
+# Planet data for all 12 planets
 var planets = [
 	{
 		"name": "earth",
@@ -114,23 +114,94 @@ var planets = [
 ]
 
 func _run():
-	print("Generating planet scenes...")
-	var dir = DirAccess.open("res://scenes/planets/")
-	if not dir.dir_exists("res://scenes/planets/"):
-		dir.make_dir("res://scenes/planets/")
+	print("Generating all scenes...")
+	var dir = DirAccess.open("res://scenes/planet/")
+	if not dir.dir_exists("res://scenes/planet/"):
+		dir.make_dir("res://scenes/planet/")
 
+	# Create base PlanetScene in memory
+	var base_scene = create_base_planet_scene()
+
+	# Generate and save PlanetScene.tscn
+	var packed_base_scene = PackedScene.new()
+	packed_base_scene.pack(base_scene)
+	ResourceSaver.save(packed_base_scene, "res://scenes/planet/PlanetScene.tscn")
+
+	# Generate all planet-specific scenes
 	for planet in planets:
-		generate_planet_scene(planet)
+		generate_planet_scene(planet, base_scene.duplicate())
 
-	print("Planet scenes generated successfully!")
+	print("All scenes generated successfully!")
 
-func generate_planet_scene(planet_data):
-	var scene = SceneTree.new()
+func create_base_planet_scene():
+	var root = Node3D.new()
+	root.name = "PlanetScene"
+
+	# Player
+	var player = CharacterBody3D.new()
+	player.name = "Player"
+	player.position = Vector3(0, 0, 0)
+	root.add_child(player)
+	player.owner = root
+
+	var player_mesh = MeshInstance3D.new()
+	player_mesh.name = "MeshInstance3D"
+	player_mesh.mesh = CapsuleMesh.new()
+	player_mesh.mesh.height = 2
+	player_mesh.mesh.radius = 0.5
+	player.add_child(player_mesh)
+	player_mesh.owner = root
+
+	var player_collision = CollisionShape3D.new()
+	player_collision.name = "CollisionShape3D"
+	player_collision.shape = CapsuleShape3D.new()
+	player_collision.shape.height = 2
+	player_collision.shape.radius = 0.5
+	player.add_child(player_collision)
+	player_collision.owner = root
+
+	var camera = Camera3D.new()
+	camera.name = "Camera3D"
+	camera.current = true
+	camera.position = Vector3(0, 1, 0)
+	player.add_child(camera)
+	camera.owner = root
+
+	# Ground (default)
+	var ground = StaticBody3D.new()
+	ground.name = "Ground"
+	ground.position = Vector3(0, -0.1, 0)
+	root.add_child(ground)
+	ground.owner = root
+
+	var ground_mesh = MeshInstance3D.new()
+	ground_mesh.name = "MeshInstance3D"
+	ground_mesh.mesh = BoxMesh.new()
+	ground_mesh.mesh.size = Vector3(100, 0.2, 100)
+	ground.add_child(ground_mesh)
+	ground_mesh.owner = root
+
+	var ground_collision = CollisionShape3D.new()
+	ground_collision.name = "CollisionShape3D"
+	ground_collision.shape = BoxShape3D.new()
+	ground_collision.shape.size = Vector3(100, 0.2, 100)
+	ground.add_child(ground_collision)
+	ground_collision.owner = root
+
+	# MissionManager
+	var mission_manager = Node.new()
+	mission_manager.name = "MissionManager"
+	root.add_child(mission_manager)
+	mission_manager.owner = root
+
+	return root
+
+func generate_planet_scene(planet_data, base_scene):
 	var root = Node3D.new()
 	root.name = planet_data["name"].capitalize().replace("_", "")
 
-	# Instance PlanetScene.tscn and make editable
-	var planet_scene = load("res://scenes/planets/PlanetScene.tscn").instantiate()
+	# Use duplicated base scene
+	var planet_scene = base_scene
 	planet_scene.name = "PlanetScene"
 	root.add_child(planet_scene)
 	planet_scene.owner = root
@@ -141,33 +212,14 @@ func generate_planet_scene(planet_data):
 
 	# Customize Ground
 	var ground = planet_scene.get_node("Ground")
-	if not ground:
-		print("Error: 'Ground' not found for ", planet_data["name"])
-		return
 	ground.position = Vector3(0, -planet_data["terrain_size"].y / 2, 0)
-	
 	var mesh_instance = ground.get_node("MeshInstance3D")
-	if not mesh_instance:
-		print("Error: 'MeshInstance3D' not found for ", planet_data["name"])
-		mesh_instance = MeshInstance3D.new()
-		mesh_instance.name = "MeshInstance3D"
-		ground.add_child(mesh_instance)
-		mesh_instance.owner = root
-	
-	var box_mesh = BoxMesh.new()
-	box_mesh.size = planet_data["terrain_size"]
-	mesh_instance.mesh = box_mesh
+	mesh_instance.mesh.size = planet_data["terrain_size"]
 	var material = StandardMaterial3D.new()
 	material.albedo_color = planet_data["terrain_color"]
 	mesh_instance.set_surface_override_material(0, material)
-	
 	var collision_shape = ground.get_node("CollisionShape3D")
-	if not collision_shape:
-		print("Error: 'CollisionShape3D' not found for ", planet_data["name"])
-		return
-	var box_shape = BoxShape3D.new()
-	box_shape.size = planet_data["terrain_size"]
-	collision_shape.shape = box_shape
+	collision_shape.shape.size = planet_data["terrain_size"]
 
 	# Add Building
 	if planet_data["building"]:
@@ -214,4 +266,4 @@ func generate_planet_scene(planet_data):
 	# Save the scene
 	var packed_scene = PackedScene.new()
 	packed_scene.pack(root)
-	ResourceSaver.save(packed_scene, "res://scenes/planets/" + planet_data["name"] + ".tscn")
+	ResourceSaver.save(packed_scene, "res://scenes/planet/" + planet_data["name"] + ".tscn")

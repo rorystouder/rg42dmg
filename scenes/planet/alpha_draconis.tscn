@@ -1,0 +1,54 @@
+[gd_scene load_steps=7 format=3 uid="uid://b3unullvyiccj"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_4u2kd"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ejbwa"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_dduhq"]
+size = Vector3(100, 0.3, 100)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e2gmt"]
+albedo_color = Color(1, 0.2, 0.2, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_u1nxf"]
+size = Vector3(100, 0.3, 100)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5ire3"]
+size = Vector3(5, 5, 5)
+
+[node name="Alpha Draconis" type="Node3D"]
+
+[node name="PlanetScene" type="Node3D" parent="."]
+
+[node name="Player" type="CharacterBody3D" parent="PlanetScene"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PlanetScene/Player"]
+mesh = SubResource("CapsuleMesh_4u2kd")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlanetScene/Player"]
+shape = SubResource("CapsuleShape3D_ejbwa")
+
+[node name="Camera3D" type="Camera3D" parent="PlanetScene/Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+current = true
+
+[node name="Ground" type="StaticBody3D" parent="PlanetScene"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.15, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PlanetScene/Ground"]
+mesh = SubResource("BoxMesh_dduhq")
+surface_material_override/0 = SubResource("StandardMaterial3D_e2gmt")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlanetScene/Ground"]
+shape = SubResource("BoxShape3D_u1nxf")
+
+[node name="MissionManager" type="Node" parent="PlanetScene"]
+
+[node name="Rock" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 2.5, 10)
+
+[node name="@CSGBox3D@17685" type="CSGBox3D" parent="Rock"]
+size = Vector3(5, 5, 5)
+
+[node name="@CollisionShape3D@17686" type="CollisionShape3D" parent="Rock"]
+shape = SubResource("BoxShape3D_5ire3")

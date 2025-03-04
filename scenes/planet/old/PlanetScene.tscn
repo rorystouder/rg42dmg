@@ -1,0 +1,48 @@
+[gd_scene load_steps=9 format=3 uid="uid://bauqut1wy1qdp"]
+
+[ext_resource type="Script" path="res://scripts/planet/player_controller.gd" id="1_qgj1f"]
+[ext_resource type="Script" path="res://scripts/planet/mission_manager.gd" id="2_832c3"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_i0gik"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kucyo"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cgxt6"]
+albedo_color = Color(0, 1, 0, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_0diba"]
+material = SubResource("StandardMaterial3D_cgxt6")
+size = Vector2(100, 100)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_31vyw"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4ykng"]
+size = Vector3(50, 0.001, 50)
+
+[node name="PlanetScene" type="Node3D"]
+
+[node name="Player" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+script = ExtResource("1_qgj1f")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player"]
+mesh = SubResource("CapsuleMesh_i0gik")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+shape = SubResource("CapsuleShape3D_kucyo")
+
+[node name="Camera3D" type="Camera3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="Ground" type="StaticBody3D" parent="."]
+
+[node name="PlaneMesh" type="MeshInstance3D" parent="Ground"]
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0)
+mesh = SubResource("PlaneMesh_0diba")
+surface_material_override/0 = SubResource("StandardMaterial3D_31vyw")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("BoxShape3D_4ykng")
+
+[node name="MissionManager" type="Node3D" parent="."]
+script = ExtResource("2_832c3")

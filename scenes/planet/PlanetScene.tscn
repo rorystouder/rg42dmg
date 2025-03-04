@@ -1,0 +1,42 @@
+[gd_scene load_steps=7 format=3 uid="uid://bl7ele4mskppf"]
+
+[ext_resource type="Script" path="res://scripts/planet/player_controller.gd" id="1_ta2si"]
+[ext_resource type="Script" path="res://scripts/planet/mission_manager.gd" id="2_12h31"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_4u2kd"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ejbwa"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_dduhq"]
+size = Vector3(100, 0.2, 100)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_u1nxf"]
+size = Vector3(100, 0.2, 100)
+
+[node name="PlanetScene" type="Node3D"]
+
+[node name="Player" type="CharacterBody3D" parent="."]
+script = ExtResource("1_ta2si")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_4u2kd")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+shape = SubResource("CapsuleShape3D_ejbwa")
+
+[node name="Camera3D" type="Camera3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+current = true
+
+[node name="Ground" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("BoxMesh_dduhq")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("BoxShape3D_u1nxf")
+
+[node name="MissionManager" type="Node" parent="."]
+script = ExtResource("2_12h31")

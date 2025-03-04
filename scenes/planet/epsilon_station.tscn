@@ -1,0 +1,62 @@
+[gd_scene load_steps=8 format=3 uid="uid://dp48voysocaun"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_4u2kd"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ejbwa"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_dduhq"]
+size = Vector3(100, 0.1, 100)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2p3hk"]
+albedo_color = Color(0.8, 0.8, 0.8, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_u1nxf"]
+size = Vector3(100, 0.1, 100)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qrf5y"]
+size = Vector3(5, 5, 5)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_jem0a"]
+
+[node name="Epsilon Station" type="Node3D"]
+
+[node name="PlanetScene" type="Node3D" parent="."]
+
+[node name="Player" type="CharacterBody3D" parent="PlanetScene"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PlanetScene/Player"]
+mesh = SubResource("CapsuleMesh_4u2kd")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlanetScene/Player"]
+shape = SubResource("CapsuleShape3D_ejbwa")
+
+[node name="Camera3D" type="Camera3D" parent="PlanetScene/Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+current = true
+
+[node name="Ground" type="StaticBody3D" parent="PlanetScene"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PlanetScene/Ground"]
+mesh = SubResource("BoxMesh_dduhq")
+surface_material_override/0 = SubResource("StandardMaterial3D_2p3hk")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlanetScene/Ground"]
+shape = SubResource("BoxShape3D_u1nxf")
+
+[node name="MissionManager" type="Node" parent="PlanetScene"]
+
+[node name="TradeKiosk" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 2.5, 10)
+
+[node name="@CSGBox3D@17670" type="CSGBox3D" parent="TradeKiosk"]
+size = Vector3(5, 5, 5)
+
+[node name="@CollisionShape3D@17671" type="CollisionShape3D" parent="TradeKiosk"]
+shape = SubResource("BoxShape3D_qrf5y")
+
+[node name="Trader" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.5, 5)
+
+[node name="@MeshInstance3D@17672" type="MeshInstance3D" parent="Trader"]
+mesh = SubResource("CapsuleMesh_jem0a")
