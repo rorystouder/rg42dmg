@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://cktt6shiqk8pe"]
+
+[ext_resource type="PackedScene" uid="uid://bauqut1wy1qdp" path="res://scenes/planets/PlanetScene.tscn" id="1_teb4r"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6n0xr"]
+size = Vector3(10, 5, 2)
+
+[node name="Beta Hercules" type="Node3D"]
+
+[node name="PlanetScene" type="Node3D" parent="." instance=ExtResource("1_teb4r")]
+
+[node name="Barricade" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 2.5, 10)
+
+[node name="@CSGBox3D@88552" type="CSGBox3D" parent="Barricade"]
+size = Vector3(10, 5, 2)
+
+[node name="@CollisionShape3D@88553" type="CollisionShape3D" parent="Barricade"]
+shape = SubResource("BoxShape3D_6n0xr")

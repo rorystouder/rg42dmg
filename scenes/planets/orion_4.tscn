@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://dfu1sv73b531q"]
+
+[ext_resource type="PackedScene" uid="uid://bauqut1wy1qdp" path="res://scenes/planets/PlanetScene.tscn" id="1_b3j2h"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g4lpo"]
+size = Vector3(10, 8, 10)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_bxfq6"]
+
+[node name="Orion 4" type="Node3D"]
+
+[node name="PlanetScene" type="Node3D" parent="." instance=ExtResource("1_b3j2h")]
+
+[node name="Barn" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 4, 10)
+
+[node name="@CSGBox3D@88538" type="CSGBox3D" parent="Barn"]
+size = Vector3(10, 8, 10)
+
+[node name="@CollisionShape3D@88539" type="CollisionShape3D" parent="Barn"]
+shape = SubResource("BoxShape3D_g4lpo")
+
+[node name="Ranger" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 1, 5)
+
+[node name="@MeshInstance3D@88540" type="MeshInstance3D" parent="Ranger"]
+mesh = SubResource("CapsuleMesh_bxfq6")

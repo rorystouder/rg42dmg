@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://d1nkivm5cgblk"]
+
+[ext_resource type="PackedScene" uid="uid://bauqut1wy1qdp" path="res://scenes/planets/PlanetScene.tscn" id="1_wi8od"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dc2of"]
+size = Vector3(6, 4, 6)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_q80ua"]
+
+[node name="Tau Ceti 3" type="Node3D"]
+
+[node name="PlanetScene" type="Node3D" parent="." instance=ExtResource("1_wi8od")]
+
+[node name="Shack" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 2, 10)
+
+[node name="@CSGBox3D@88546" type="CSGBox3D" parent="Shack"]
+size = Vector3(6, 4, 6)
+
+[node name="@CollisionShape3D@88547" type="CollisionShape3D" parent="Shack"]
+shape = SubResource("BoxShape3D_dc2of")
+
+[node name="Syndicate" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 1, 5)
+
+[node name="@MeshInstance3D@88548" type="MeshInstance3D" parent="Syndicate"]
+mesh = SubResource("CapsuleMesh_q80ua")

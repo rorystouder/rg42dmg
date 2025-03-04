@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://cqgyh6d3umukk"]
+
+[ext_resource type="PackedScene" uid="uid://bauqut1wy1qdp" path="res://scenes/planets/PlanetScene.tscn" id="1_y2lol"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wemei"]
+size = Vector3(15, 10, 15)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_rgufj"]
+
+[node name="Zeta Prime" type="Node3D"]
+
+[node name="PlanetScene" type="Node3D" parent="." instance=ExtResource("1_y2lol")]
+
+[node name="Factory" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 5, 10)
+
+[node name="@CSGBox3D@88554" type="CSGBox3D" parent="Factory"]
+size = Vector3(15, 10, 15)
+
+[node name="@CollisionShape3D@88555" type="CollisionShape3D" parent="Factory"]
+shape = SubResource("BoxShape3D_wemei")
+
+[node name="Worker" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 1, 5)
+
+[node name="@MeshInstance3D@88556" type="MeshInstance3D" parent="Worker"]
+mesh = SubResource("CapsuleMesh_rgufj")

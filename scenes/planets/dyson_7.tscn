@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://byvifdeiil6ap"]
+
+[ext_resource type="PackedScene" uid="uid://bauqut1wy1qdp" path="res://scenes/planets/PlanetScene.tscn" id="1_e3xd4"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_uqcl4"]
+size = Vector3(5, 15, 5)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_5mer6"]
+
+[node name="Dyson 7" type="Node3D"]
+
+[node name="PlanetScene" type="Node3D" parent="." instance=ExtResource("1_e3xd4")]
+
+[node name="TechTower" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 7.5, 10)
+
+[node name="@CSGBox3D@88535" type="CSGBox3D" parent="TechTower"]
+size = Vector3(5, 15, 5)
+
+[node name="@CollisionShape3D@88536" type="CollisionShape3D" parent="TechTower"]
+shape = SubResource("BoxShape3D_uqcl4")
+
+[node name="Syndicate" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 1, 5)
+
+[node name="@MeshInstance3D@88537" type="MeshInstance3D" parent="Syndicate"]
+mesh = SubResource("CapsuleMesh_5mer6")

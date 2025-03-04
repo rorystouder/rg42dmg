@@ -17,7 +17,7 @@ size = Vector2(100, 100)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_31vyw"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_4ykng"]
-size = Vector3(50, 1, 50)
+size = Vector3(50, 0.001, 50)
 
 [node name="PlanetScene" type="Node3D"]
 

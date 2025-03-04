@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://dq4rrgfl3pc01"]
+
+[ext_resource type="PackedScene" uid="uid://bauqut1wy1qdp" path="res://scenes/planets/PlanetScene.tscn" id="1_imllf"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_45ft1"]
+size = Vector3(10, 10, 10)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ojahp"]
+
+[node name="Sirius Verge" type="Node3D"]
+
+[node name="PlanetScene" type="Node3D" parent="." instance=ExtResource("1_imllf")]
+
+[node name="Office" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 5, 10)
+
+[node name="@CSGBox3D@88543" type="CSGBox3D" parent="Office"]
+size = Vector3(10, 10, 10)
+
+[node name="@CollisionShape3D@88544" type="CollisionShape3D" parent="Office"]
+shape = SubResource("BoxShape3D_45ft1")
+
+[node name="Trader" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 1, 5)
+
+[node name="@MeshInstance3D@88545" type="MeshInstance3D" parent="Trader"]
+mesh = SubResource("CapsuleMesh_ojahp")
