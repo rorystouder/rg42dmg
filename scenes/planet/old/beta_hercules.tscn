@@ -1,47 +1,32 @@
-[gd_scene load_steps=13 format=3 uid="uid://bwnyp61dnujxy"]
+[gd_scene load_steps=7 format=3 uid="uid://ddg46ffk23mwt"]
 
-[ext_resource type="PackedScene" uid="uid://bauqut1wy1qdp" path="res://scenes/planet/old/PlanetScene.tscn" id="1_0w2cf"]
-[ext_resource type="Script" path="res://scripts/planet/player_controller.gd" id="2_uv1na"]
-[ext_resource type="Script" path="res://scripts/planet/mission_manager.gd" id="3_e02g6"]
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_4u2kd"]
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_i0gik"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ejbwa"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kucyo"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cgxt6"]
-albedo_color = Color(0, 1, 0, 1)
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_0diba"]
-material = SubResource("StandardMaterial3D_cgxt6")
-size = Vector2(100, 100)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_31vyw"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_8t420"]
+[sub_resource type="BoxMesh" id="BoxMesh_dduhq"]
 size = Vector3(100, 0.2, 100)
 
-[sub_resource type="BoxMesh" id="BoxMesh_wriaw"]
-size = Vector3(100, 0.2, 100)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w48xp"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qobgn"]
 albedo_color = Color(0.4, 0.4, 0.4, 1)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_3mcs4"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_u1nxf"]
+size = Vector3(100, 0.2, 100)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6tao8"]
 size = Vector3(10, 5, 2)
 
 [node name="Beta Hercules" type="Node3D"]
 
-[node name="PlanetScene" type="Node3D" parent="." instance=ExtResource("1_0w2cf")]
+[node name="PlanetScene" type="Node3D" parent="."]
 
 [node name="Player" type="CharacterBody3D" parent="PlanetScene"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-script = ExtResource("2_uv1na")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="PlanetScene/Player"]
-mesh = SubResource("CapsuleMesh_i0gik")
+mesh = SubResource("CapsuleMesh_4u2kd")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PlanetScene/Player"]
-shape = SubResource("CapsuleShape3D_kucyo")
+shape = SubResource("CapsuleShape3D_ejbwa")
 
 [node name="Camera3D" type="Camera3D" parent="PlanetScene/Player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -50,26 +35,20 @@ current = true
 [node name="Ground" type="StaticBody3D" parent="PlanetScene"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
 
-[node name="PlaneMesh" type="MeshInstance3D" parent="PlanetScene/Ground"]
-transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0)
-mesh = SubResource("PlaneMesh_0diba")
-surface_material_override/0 = SubResource("StandardMaterial3D_31vyw")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PlanetScene/Ground"]
+mesh = SubResource("BoxMesh_dduhq")
+surface_material_override/0 = SubResource("StandardMaterial3D_qobgn")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PlanetScene/Ground"]
-shape = SubResource("BoxShape3D_8t420")
+shape = SubResource("BoxShape3D_u1nxf")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="PlanetScene/Ground"]
-mesh = SubResource("BoxMesh_wriaw")
-surface_material_override/0 = SubResource("StandardMaterial3D_w48xp")
-
-[node name="MissionManager" type="Node3D" parent="PlanetScene"]
-script = ExtResource("3_e02g6")
+[node name="MissionManager" type="Node" parent="PlanetScene"]
 
 [node name="Barricade" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 2.5, 10)
 
-[node name="@CSGBox3D@17728" type="CSGBox3D" parent="Barricade"]
+[node name="@CSGBox3D@17696" type="CSGBox3D" parent="Barricade"]
 size = Vector3(10, 5, 2)
 
-[node name="@CollisionShape3D@17729" type="CollisionShape3D" parent="Barricade"]
-shape = SubResource("BoxShape3D_3mcs4")
+[node name="@CollisionShape3D@17697" type="CollisionShape3D" parent="Barricade"]
+shape = SubResource("BoxShape3D_6tao8")

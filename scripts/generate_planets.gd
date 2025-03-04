@@ -113,6 +113,7 @@ var planets = [
 	}
 ]
 
+
 func _run():
 	print("Generating all scenes...")
 	var dir = DirAccess.open("res://scenes/planet/")
@@ -122,7 +123,7 @@ func _run():
 	# Create base PlanetScene in memory
 	var base_scene = create_base_planet_scene()
 
-	# Generate and save PlanetScene.tscn
+	# Save PlanetScene.tscn
 	var packed_base_scene = PackedScene.new()
 	packed_base_scene.pack(base_scene)
 	ResourceSaver.save(packed_base_scene, "res://scenes/planet/PlanetScene.tscn")
@@ -141,6 +142,7 @@ func create_base_planet_scene():
 	var player = CharacterBody3D.new()
 	player.name = "Player"
 	player.position = Vector3(0, 0, 0)
+	player.set_script(load("res://scripts/planet/player_controller.gd"))  # Attach here
 	root.add_child(player)
 	player.owner = root
 
@@ -191,6 +193,7 @@ func create_base_planet_scene():
 	# MissionManager
 	var mission_manager = Node.new()
 	mission_manager.name = "MissionManager"
+	mission_manager.set_script(load("res://scripts/planet/mission_manager.gd"))
 	root.add_child(mission_manager)
 	mission_manager.owner = root
 
@@ -209,6 +212,11 @@ func generate_planet_scene(planet_data, base_scene):
 		child.owner = root
 		for subchild in child.get_children():
 			subchild.owner = root
+
+	# Ensure Player script is set (redundant but explicit)
+	var player = planet_scene.get_node("Player")
+	if player and not player.get_script():
+		player.set_script(load("res://scripts/planet/player_controller.gd"))
 
 	# Customize Ground
 	var ground = planet_scene.get_node("Ground")
