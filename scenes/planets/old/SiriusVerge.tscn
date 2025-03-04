@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://ceqa5k5wbldnr"]
-
-[ext_resource type="PackedScene" uid="uid://bauqut1wy1qdp" path="res://scenes/planets/PlanetScene.tscn" id="1_v0asd"]
-
-[node name="SiriusVerge" type="Node3D"]
-
-[node name="PlanetScene" parent="." instance=ExtResource("1_v0asd")]

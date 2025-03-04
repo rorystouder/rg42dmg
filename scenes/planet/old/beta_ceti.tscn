@@ -1,28 +1,29 @@
-[gd_scene load_steps=10 format=3 uid="uid://bchpr3gp5tibb"]
+[gd_scene load_steps=11 format=3 uid="uid://pgtgqanp3jve"]
 
 [ext_resource type="Script" path="res://scripts/planet/player_controller.gd" id="1_vgclq"]
+[ext_resource type="Script" path="res://scripts/planet/mission_manager.gd" id="2_fghfi"]
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_4u2kd"]
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_11lrj"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ejbwa"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7x5p2"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_dduhq"]
+[sub_resource type="BoxMesh" id="BoxMesh_5rw02"]
 size = Vector3(100, 0.2, 100)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b04i7"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_78yv5"]
 albedo_color = Color(0.5, 0.5, 0.5, 1)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_u1nxf"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_85005"]
 size = Vector3(100, 0.2, 100)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_f5o0v"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_1cspi"]
 size = Vector3(10, 10, 10)
 
-[sub_resource type="SphereMesh" id="SphereMesh_075n8"]
+[sub_resource type="SphereMesh" id="SphereMesh_eo5d6"]
 radius = 2.0
 height = 4.0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f3s10"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bqxr7"]
 albedo_color = Color(1, 0, 0, 1)
 
 [node name="Beta Ceti" type="Node3D"]
@@ -33,11 +34,10 @@ albedo_color = Color(1, 0, 0, 1)
 script = ExtResource("1_vgclq")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="PlanetScene/Player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-mesh = SubResource("CapsuleMesh_4u2kd")
+mesh = SubResource("CapsuleMesh_11lrj")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PlanetScene/Player"]
-shape = SubResource("CapsuleShape3D_ejbwa")
+shape = SubResource("CapsuleShape3D_7x5p2")
 
 [node name="Camera3D" type="Camera3D" parent="PlanetScene/Player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -47,26 +47,27 @@ current = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="PlanetScene/Ground"]
-mesh = SubResource("BoxMesh_dduhq")
-surface_material_override/0 = SubResource("StandardMaterial3D_b04i7")
+mesh = SubResource("BoxMesh_5rw02")
+surface_material_override/0 = SubResource("StandardMaterial3D_78yv5")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PlanetScene/Ground"]
-shape = SubResource("BoxShape3D_u1nxf")
+shape = SubResource("BoxShape3D_85005")
 
 [node name="MissionManager" type="Node" parent="PlanetScene"]
+script = ExtResource("2_fghfi")
 
 [node name="MiningRig" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 5, 10)
 
-[node name="@CSGBox3D@17673" type="CSGBox3D" parent="MiningRig"]
+[node name="@CSGBox3D@24477" type="CSGBox3D" parent="MiningRig"]
 size = Vector3(10, 10, 10)
 
-[node name="@CollisionShape3D@17674" type="CollisionShape3D" parent="MiningRig"]
-shape = SubResource("BoxShape3D_f5o0v")
+[node name="@CollisionShape3D@24478" type="CollisionShape3D" parent="MiningRig"]
+shape = SubResource("BoxShape3D_1cspi")
 
 [node name="Hazard" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0.2, 15)
 
-[node name="@MeshInstance3D@17675" type="MeshInstance3D" parent="Hazard"]
-mesh = SubResource("SphereMesh_075n8")
-surface_material_override/0 = SubResource("StandardMaterial3D_f3s10")
+[node name="@MeshInstance3D@24479" type="MeshInstance3D" parent="Hazard"]
+mesh = SubResource("SphereMesh_eo5d6")
+surface_material_override/0 = SubResource("StandardMaterial3D_bqxr7")

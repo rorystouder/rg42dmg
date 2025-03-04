@@ -196,6 +196,13 @@ func create_base_planet_scene():
 	mission_manager.set_script(load("res://scripts/planet/mission_manager.gd"))
 	root.add_child(mission_manager)
 	mission_manager.owner = root
+	
+	#Inventory
+	var inventory = Inventory.new()
+	inventory.name = "Inventory"
+	inventory.size = 10
+	root.add_child(inventory)
+	inventory.owner = root
 
 	return root
 
@@ -270,6 +277,36 @@ func generate_planet_scene(planet_data, base_scene):
 			mesh_instance_npc.mesh = capsule_mesh
 		npc.add_child(mesh_instance_npc)
 		mesh_instance_npc.owner = root
+	
+	#inventory trading posts
+	if planet_data["type"] not in ["Hostile", "Contested"]:  # Exclude hostile/contested
+		var outpost = StaticBody3D.new()
+		outpost.name = "TradingOutpost"
+		root.add_child(outpost)
+		outpost.owner = root
+		outpost.position = Vector3(-10, 2.5, -10)  # Opposite building
+
+		var outpost_mesh = CSGBox3D.new()
+		outpost_mesh.size = Vector3(5, 5, 5)
+		outpost.add_child(outpost_mesh)
+		outpost_mesh.owner = root
+
+		var outpost_collision = CollisionShape3D.new()
+		outpost_collision.shape = BoxShape3D.new()
+		outpost_collision.shape.size = Vector3(5, 5, 5)
+		outpost.add_child(outpost_collision)
+		outpost_collision.owner = root
+
+		var outpost_area = Area3D.new()
+		outpost_area.name = "InteractionArea"
+		outpost.add_child(outpost_area)
+		outpost_area.owner = root
+
+		var area_collision = CollisionShape3D.new()
+		area_collision.shape = SphereShape3D.new()
+		area_collision.shape.radius = 3.0  # Interaction range
+		outpost_area.add_child(area_collision)
+		area_collision.owner = root
 
 	# Save the scene
 	var packed_scene = PackedScene.new()

@@ -15,9 +15,19 @@ func _ready():
 		mission_manager.connect("mission_updated", _on_mission_updated)
 	else:
 		print("Error: MissionManager not found!")
+	var area = Area3D.new()
+	area.name = "InteractionArea"
+	add_child(area)
+	var collision = CollisionShape3D.new()
+	collision.shape = SphereShape3D.new()
+	collision.shape.radius = 2.0
+	area.add_child(collision)
+	area.connect("area_entered", _on_area_entered)
+	trading_ui = preload("res://scenes/TradingUI.tscn").instantiate()
+	trading_ui.visible = false
+	get_viewport().add_child(trading_ui)
 
 func _physics_process(delta):
-	print("Velocity: ", velocity) #Debug movement
 	# Gravity
 	if not is_on_floor():
 		velocity.y -= gravity * delta
@@ -44,7 +54,7 @@ func _physics_process(delta):
 	if Input.is_action_pressed("rotate_left"):
 		rotation_input += 1.0
 	if Input.is_action_pressed("rotate_right"):
-		rotation_input -+ -1.0
+		rotation_input += -1.0
 	rotate_y(rotation_input * rotation_speed * delta)
 	move_and_slide()
 	
@@ -60,3 +70,20 @@ func _on_mission_updated(mission):
 		print("New mission: ", mission.description)
 	else:
 		print("No more missions!")
+
+func _on_area_entered(area):
+	if area.name == "InteractionArea" and area.get_parent().name == "TradingOutpost":
+		var shop_inventory = Inventory.new()
+		shop_inventory.slots = [
+			load("res://items/supply_fuel.tres"),
+			load("res://items/weapon_laser.tres"),
+			load("res://items/upgrade_engine.tres")
+		]
+		trading_ui.set_inventories(get_node("../Inventory"), shop_inventory)
+		trading_ui.visible = true
+		get_tree().paused = true
+
+func _input(event):
+	if event.is_action_pressed("ui_cancel") and trading_ui.visible:
+		trading_ui.visible = false
+		get_tree().paused = false

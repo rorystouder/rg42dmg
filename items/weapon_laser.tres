@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=2 format=3 uid="uid://dakonqbgmw4of"]
+
+[ext_resource type="Script" path="res://scripts/common/ItemData.gd" id="1_wy8pi"]
+
+[resource]
+script = ExtResource("1_wy8pi")
+name = ""
+price = 0
+type = ""
+description = ""
