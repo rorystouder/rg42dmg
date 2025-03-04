@@ -4,17 +4,12 @@ extends CharacterBody3D
 @export var sprint_speed = 8.0
 @export var jump_velocity = 4.5
 @export var gravity = 9.8
-@export var rotation_speed = 2.0 # Adjust for feel
+@export var rotation_speed = 2.0
 
 var speed = walk_speed
+var trading_ui = null  # Declared at class level
 
 func _ready():
-	var mission_manager = get_node("../MissionManager")  # Relative to Player
-	print("MissionManager init at: ", get_path())
-	if mission_manager:
-		mission_manager.connect("mission_updated", _on_mission_updated)
-	else:
-		print("Error: MissionManager not found!")
 	var area = Area3D.new()
 	area.name = "InteractionArea"
 	add_child(area)
@@ -28,15 +23,11 @@ func _ready():
 	get_viewport().add_child(trading_ui)
 
 func _physics_process(delta):
-	# Gravity
 	if not is_on_floor():
 		velocity.y -= gravity * delta
-	# Jumping
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = jump_velocity
-	# Sprinting
 	speed = sprint_speed if Input.is_action_pressed("sprint") else walk_speed
-	# Movement
 	var input_dir = Vector2(
 		Input.get_axis("move_left", "move_right"),
 		Input.get_axis("move_forward", "move_backward")
@@ -48,28 +39,13 @@ func _physics_process(delta):
 	else:
 		velocity.x = move_toward(velocity.x, 0, speed)
 		velocity.z = move_toward(velocity.z, 0, speed)
-	
-	# Rotation
 	var rotation_input = 0.0
 	if Input.is_action_pressed("rotate_left"):
 		rotation_input += 1.0
 	if Input.is_action_pressed("rotate_right"):
-		rotation_input += -1.0
+		rotation_input -= 1.0
 	rotate_y(rotation_input * rotation_speed * delta)
 	move_and_slide()
-	
-	# Check mission objective
-	var mission_manager = get_node("../MissionManager")
-	if mission_manager and mission_manager.active_mission and not mission_manager.active_mission.completed:
-		var target = Vector3(20, 0, 20) if mission_manager.active_mission.type == "delivery" else Vector3(15, 0, 15)
-		if global_transform.origin.distance_to(target) < 2.0:
-			mission_manager.complete_mission()
-
-func _on_mission_updated(mission):
-	if mission:
-		print("New mission: ", mission.description)
-	else:
-		print("No more missions!")
 
 func _on_area_entered(area):
 	if area.name == "InteractionArea" and area.get_parent().name == "TradingOutpost":
