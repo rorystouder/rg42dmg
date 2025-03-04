@@ -1,29 +1,29 @@
 [gd_scene load_steps=8 format=3 uid="uid://8sc2cypruqar"]
 
-[ext_resource type="Script" path="res://scripts/planet/player_controller.gd" id="1_ta2si"]
-[ext_resource type="Script" path="res://scripts/planet/mission_manager.gd" id="2_12h31"]
-[ext_resource type="Script" path="res://scripts/common/Inventory.gd" id="3_mtcw7"]
+[ext_resource type="Script" path="res://scripts/planet/player_controller.gd" id="1_2335i"]
+[ext_resource type="Script" path="res://scripts/planet/mission_manager.gd" id="2_b4155"]
+[ext_resource type="Script" path="res://scripts/common/Inventory.gd" id="3_w3j6p"]
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_mpvwl"]
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_t13jh"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qo2i1"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7vxqd"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_6jm7x"]
+[sub_resource type="BoxMesh" id="BoxMesh_03ndn"]
 size = Vector3(100, 0.2, 100)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_6ee0v"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_tqs06"]
 size = Vector3(100, 0.2, 100)
 
 [node name="PlanetScene" type="Node3D"]
 
 [node name="Player" type="CharacterBody3D" parent="."]
-script = ExtResource("1_ta2si")
+script = ExtResource("1_2335i")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Player"]
-mesh = SubResource("CapsuleMesh_mpvwl")
+mesh = SubResource("CapsuleMesh_t13jh")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
-shape = SubResource("CapsuleShape3D_qo2i1")
+shape = SubResource("CapsuleShape3D_7vxqd")
 
 [node name="Camera3D" type="Camera3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -33,13 +33,13 @@ current = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
-mesh = SubResource("BoxMesh_6jm7x")
+mesh = SubResource("BoxMesh_03ndn")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
-shape = SubResource("BoxShape3D_6ee0v")
+shape = SubResource("BoxShape3D_tqs06")
 
 [node name="MissionManager" type="Node" parent="."]
-script = ExtResource("2_12h31")
+script = ExtResource("2_b4155")
 
 [node name="Inventory" type="Node" parent="."]
-script = ExtResource("3_mtcw7")
+script = ExtResource("3_w3j6p")

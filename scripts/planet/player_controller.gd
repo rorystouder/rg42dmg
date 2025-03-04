@@ -7,7 +7,8 @@ extends CharacterBody3D
 @export var rotation_speed = 2.0
 
 var speed = walk_speed
-var trading_ui = null  # Declared at class level
+var trading_ui = null
+var player_inventory = null  # Add reference to track inventory
 
 func _ready():
 	var area = Area3D.new()
@@ -20,7 +21,10 @@ func _ready():
 	area.connect("area_entered", _on_area_entered)
 	trading_ui = preload("res://scenes/TradingUI.tscn").instantiate()
 	trading_ui.visible = false
-	get_viewport().add_child(trading_ui)
+	get_viewport().call_deferred("add_child", trading_ui)
+	player_inventory = get_node_or_null("../Inventory")  # Safely get inventory
+	if not player_inventory:
+		print("Error: Player Inventory not found!")
 
 func _physics_process(delta):
 	if not is_on_floor():
@@ -50,14 +54,17 @@ func _physics_process(delta):
 func _on_area_entered(area):
 	if area.name == "InteractionArea" and area.get_parent().name == "TradingOutpost":
 		var shop_inventory = Inventory.new()
-		shop_inventory.slots = [
-			load("res://items/supply_fuel.tres"),
-			load("res://items/weapon_laser.tres"),
-			load("res://items/upgrade_engine.tres")
-		]
-		trading_ui.set_inventories(get_node("../Inventory"), shop_inventory)
-		trading_ui.visible = true
-		get_tree().paused = true
+		shop_inventory.add_item(load("res://items/supply_fuel.tres"))
+		shop_inventory.add_item(load("res://items/weapon_laser.tres"))
+		shop_inventory.add_item(load("res://items/upgrade_engine.tres"))
+		add_child(shop_inventory)
+		shop_inventory.owner = self
+		if player_inventory:
+			trading_ui.set_inventories(player_inventory, shop_inventory)
+			trading_ui.visible = true
+			get_tree().paused = true
+		else:
+			print("Error: Cannot open trading UI - player inventory is null")
 
 func _input(event):
 	if event.is_action_pressed("ui_cancel") and trading_ui.visible:
