@@ -40,10 +40,10 @@ func _run():
 	player_inventory.add_child(player_label)
 	player_label.owner = root
 
-	var player_item_list = ItemList.new()
+	var player_item_list = VBoxContainer.new()
 	player_item_list.name = "ItemList"
-	player_item_list.size = Vector2(200, 300)  # Explicit size
-	player_item_list.visible = true  # Ensure visible
+	player_item_list.size = Vector2(200, 300)
+	player_item_list.visible = true
 	player_inventory.add_child(player_item_list)
 	player_item_list.owner = root
 
@@ -66,31 +66,28 @@ func _run():
 	shop_inventory.add_child(shop_label)
 	shop_label.owner = root
 
-	var shop_item_list = ItemList.new()
+	var shop_item_list = VBoxContainer.new()
 	shop_item_list.name = "ItemList"
-	shop_item_list.size = Vector2(200, 300)  # Explicit size
-	shop_item_list.visible = true  # Ensure visible
+	shop_item_list.size = Vector2(200, 300)
+	shop_item_list.visible = true
 	shop_inventory.add_child(shop_item_list)
 	shop_item_list.owner = root
 
 	var currency_label = Label.new()
 	currency_label.name = "CurrencyLabel"
 	currency_label.text = "Credits: 0"
-	currency_label.anchor_left = 0.4
-	currency_label.anchor_right = 0.6
-	currency_label.anchor_bottom = 1.0
-	currency_label.offset_bottom = -10
-	currency_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	currency_label.offset_left = 300
+	currency_label.offset_top = 10
+	currency_label.size = Vector2(200, 40)
+	currency_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	panel.add_child(currency_label)
 	currency_label.owner = root
 
 	var buy_button = Button.new()
 	buy_button.name = "BuyButton"
 	buy_button.text = "Buy"
-	buy_button.anchor_right = 1.0
-	buy_button.anchor_bottom = 1.0
-	buy_button.offset_right = -10
-	buy_button.offset_bottom = -10
+	buy_button.offset_left = 800
+	buy_button.offset_top = 460
 	buy_button.size = Vector2(100, 40)
 	panel.add_child(buy_button)
 	buy_button.owner = root
@@ -98,10 +95,8 @@ func _run():
 	var sell_button = Button.new()
 	sell_button.name = "SellButton"
 	sell_button.text = "Sell"
-	sell_button.anchor_left = 0.0
-	sell_button.anchor_bottom = 1.0
 	sell_button.offset_left = 10
-	sell_button.offset_bottom = -10
+	sell_button.offset_top = 460
 	sell_button.size = Vector2(100, 40)
 	panel.add_child(sell_button)
 	sell_button.owner = root

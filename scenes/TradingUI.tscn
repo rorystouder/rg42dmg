@@ -1,10 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://dwwwo8cei14e"]
+[gd_scene load_steps=2 format=3 uid="uid://byiipe1c88ggr"]
 
 [ext_resource type="Script" path="res://scripts/trading/TradingUI.gd" id="1_rrke4"]
 
 [node name="TradingUI" type="Control"]
 layout_mode = 3
-anchors_preset = 15
+anchors_preset = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource("1_rrke4")
@@ -29,7 +29,7 @@ offset_bottom = -50.0
 layout_mode = 2
 text = "Player Inventory"
 
-[node name="ItemList" type="ItemList" parent="Panel/PlayerInventory"]
+[node name="ItemList" type="VBoxContainer" parent="Panel/PlayerInventory"]
 layout_mode = 2
 
 [node name="ShopInventory" type="VBoxContainer" parent="Panel"]
@@ -46,34 +46,29 @@ offset_bottom = -50.0
 layout_mode = 2
 text = "Shop"
 
-[node name="ItemList" type="ItemList" parent="Panel/ShopInventory"]
+[node name="ItemList" type="VBoxContainer" parent="Panel/ShopInventory"]
 layout_mode = 2
 
 [node name="CurrencyLabel" type="Label" parent="Panel"]
 layout_mode = 0
-anchor_left = 0.4
-anchor_right = 0.6
-anchor_bottom = 1.0
-offset_left = -68.64
-offset_right = -52.96
-offset_bottom = -488.4
+offset_left = 300.0
+offset_top = 10.0
+offset_right = 500.0
+offset_bottom = 50.0
 text = "Credits: 0"
 
 [node name="BuyButton" type="Button" parent="Panel"]
 layout_mode = 0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 750.0
+offset_left = 800.0
 offset_top = 460.0
-offset_right = -71.5999
-offset_bottom = -27.4
+offset_right = 900.0
+offset_bottom = 500.0
 text = "Buy"
 
 [node name="SellButton" type="Button" parent="Panel"]
 layout_mode = 0
-anchor_bottom = 1.0
-offset_left = 50.0
+offset_left = 10.0
 offset_top = 460.0
-offset_right = 150.0
-offset_bottom = -27.4
+offset_right = 110.0
+offset_bottom = 500.0
 text = "Sell"
