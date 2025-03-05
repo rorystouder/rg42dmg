@@ -24,6 +24,12 @@ func _ready():
 	trading_ui.visible = false
 	get_viewport().call_deferred("add_child", trading_ui)
 	player_inventory = get_node_or_null("../Inventory")  # Safely get inventory
+	print("Player inventory in _ready: ", player_inventory)
+	if not player_inventory:
+		print("Error: Player Inventory not found!")
+	else:
+		print("Player inventory slots in _ready: ", player_inventory.slots)
+		trading_ui.set_player_credits(credits)
 	if not player_inventory:
 		print("Error: Player Inventory not found!")
 
@@ -52,17 +58,28 @@ func _physics_process(delta):
 	rotate_y(rotation_input * rotation_speed * delta)
 	move_and_slide()
 
+# ... rest of player_controller.gd unchanged ...
+
 func _on_area_entered(area):
 	if area.name == "InteractionArea" and area.get_parent().name == "TradingOutpost":
 		var shop_inventory = Inventory.new()
-		shop_inventory.add_item(load("res://items/supply_fuel.tres"))
-		shop_inventory.add_item(load("res://items/weapon_laser.tres"))
-		shop_inventory.add_item(load("res://items/upgrade_engine.tres"))
+		print("Adding items to shop inventory:")
+		var fuel = load("res://items/supply_fuel.tres")
+		var laser = load("res://items/weapon_laser.tres")
+		var engine = load("res://items/upgrade_engine.tres")
+		print("Fuel: ", fuel)
+		print("Laser: ", laser)
+		print("Engine: ", engine)
+		shop_inventory.add_item(fuel)
+		shop_inventory.add_item(laser)
+		shop_inventory.add_item(engine)
+		print("Shop inventory slots: ", shop_inventory.slots)
 		add_child(shop_inventory)
 		shop_inventory.owner = self
 		if player_inventory:
+			print("Setting inventories - Player slots: ", player_inventory.slots)
 			trading_ui.set_inventories(player_inventory, shop_inventory)
-			trading_ui.set_player_credits(credits)  # Sync credits
+			trading_ui.set_player_credits(credits)
 			trading_ui.visible = true
 			get_tree().paused = true
 		else:
@@ -70,6 +87,7 @@ func _on_area_entered(area):
 
 func _input(event):
 	if event.is_action_pressed("ui_cancel") and trading_ui.visible:
-		credits = trading_ui.get_player_credits()  # Update player credits after trading
+		print("Escape pressed in player_controller - Closing Trading UI")
+		credits = trading_ui.get_player_credits()
 		trading_ui.visible = false
 		get_tree().paused = false
