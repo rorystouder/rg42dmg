@@ -1,4 +1,5 @@
 extends Node
+class_name TransactionHandler
 
 var buy_button = null
 var sell_button = null

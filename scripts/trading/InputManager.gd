@@ -1,4 +1,5 @@
 extends Node
+class_name InputManager
 
 var trading_ui = null
 

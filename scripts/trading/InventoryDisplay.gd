@@ -1,4 +1,5 @@
 extends Node
+class_name InventoryDisplay
 
 var player_item_list = null
 var shop_item_list = null
