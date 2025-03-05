@@ -8,8 +8,8 @@ extends CharacterBody3D
 
 var speed = walk_speed
 var trading_ui = null
-var player_inventory = null  # Add reference to track inventory
-var credits: int = 1000  # Player's credits
+var player_inventory = null
+var credits: int = 1000
 
 func _ready():
 	var area = Area3D.new()
@@ -23,15 +23,13 @@ func _ready():
 	trading_ui = preload("res://scenes/TradingUI.tscn").instantiate()
 	trading_ui.visible = false
 	get_viewport().call_deferred("add_child", trading_ui)
-	player_inventory = get_node_or_null("../Inventory")  # Safely get inventory
+	player_inventory = get_node_or_null("../Inventory")
 	print("Player inventory in _ready: ", player_inventory)
 	if not player_inventory:
 		print("Error: Player Inventory not found!")
 	else:
 		print("Player inventory slots in _ready: ", player_inventory.slots)
 		trading_ui.set_player_credits(credits)
-	if not player_inventory:
-		print("Error: Player Inventory not found!")
 
 func _physics_process(delta):
 	if not is_on_floor():
@@ -58,8 +56,6 @@ func _physics_process(delta):
 	rotate_y(rotation_input * rotation_speed * delta)
 	move_and_slide()
 
-# ... rest of player_controller.gd unchanged ...
-
 func _on_area_entered(area):
 	if area.name == "InteractionArea" and area.get_parent().name == "TradingOutpost":
 		var shop_inventory = Inventory.new()
@@ -84,10 +80,3 @@ func _on_area_entered(area):
 			get_tree().paused = true
 		else:
 			print("Error: Cannot open trading UI - player inventory is null")
-
-func _input(event):
-	if event.is_action_pressed("ui_cancel") and trading_ui.visible:
-		print("Escape pressed in player_controller - Closing Trading UI")
-		credits = trading_ui.get_player_credits()
-		trading_ui.visible = false
-		get_tree().paused = false
