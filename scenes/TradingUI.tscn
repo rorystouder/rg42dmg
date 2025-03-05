@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://dxrb0eg4rk5ba"]
+[gd_scene load_steps=2 format=3 uid="uid://dwwwo8cei14e"]
 
 [ext_resource type="Script" path="res://scripts/trading/TradingUI.gd" id="1_rrke4"]
 
@@ -55,26 +55,25 @@ anchor_left = 0.4
 anchor_right = 0.6
 anchor_bottom = 1.0
 offset_left = -68.64
-offset_right = -68.64
+offset_right = -52.96
 offset_bottom = -488.4
-text = "Credits: "
-horizontal_alignment = 1
+text = "Credits: 0"
 
 [node name="BuyButton" type="Button" parent="Panel"]
 layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 850.0
-offset_top = 450.0
-offset_right = -33.5999
-offset_bottom = -18.4
+offset_left = 750.0
+offset_top = 460.0
+offset_right = -71.5999
+offset_bottom = -27.4
 text = "Buy"
 
 [node name="SellButton" type="Button" parent="Panel"]
 layout_mode = 0
 anchor_bottom = 1.0
-offset_left = 10.0
-offset_top = 450.0
-offset_right = 110.0
-offset_bottom = -18.4
+offset_left = 50.0
+offset_top = 460.0
+offset_right = 150.0
+offset_bottom = -27.4
 text = "Sell"
