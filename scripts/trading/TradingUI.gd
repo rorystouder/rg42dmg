@@ -1,3 +1,4 @@
+# res://scripts/trading/TradingUI.gd
 extends Control
 
 var player_item_list = null
@@ -11,7 +12,7 @@ var shop_inventory: Inventory = null
 var credits: int = 0
 
 var inventory_display = null
-var transaction_handler = null
+var transaction_handler = null  # Declare without instantiation here
 var input_manager = null
 
 func _ready():
@@ -28,14 +29,17 @@ func _ready():
 
 	# Initialize sub-scripts
 	inventory_display = InventoryDisplay.new()
+	inventory_display.name = "InventoryDisplay"  # Optional: explicit naming
 	add_child(inventory_display)
 	inventory_display.setup(player_item_list, shop_item_list, currency_label)
 
 	transaction_handler = TransactionHandler.new()
+	transaction_handler.name = "TransactionHandler"  # Optional: explicit naming
 	add_child(transaction_handler)
 	transaction_handler.setup(buy_button, sell_button, self)
 
 	input_manager = InputManager.new()
+	input_manager.name = "InputManager"  # Optional: explicit naming
 	add_child(input_manager)
 	input_manager.setup(self)
 
