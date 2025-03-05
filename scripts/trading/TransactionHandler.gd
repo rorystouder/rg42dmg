@@ -15,17 +15,26 @@ func setup(buy_btn, sell_btn, ui):
 	sell_button = sell_btn
 	trading_ui = ui
 	if buy_button:
-		buy_button.connect("pressed", _on_buy_pressed)
+		if not buy_button.is_connected("pressed", _on_buy_pressed):
+			buy_button.connect("pressed", _on_buy_pressed)
+		DebugLogger.log("Buy button connected", "TransactionHandler")
+		buy_button.visible = true  # Ensure clickable
+		buy_button.disabled = false  # Ensure not disabled
 	else:
 		DebugLogger.error("Buy button not found", "TransactionHandler")
 	if sell_button:
-		sell_button.connect("pressed", _on_sell_pressed)
+		if not sell_button.is_connected("pressed", _on_sell_pressed):
+			sell_button.connect("pressed", _on_sell_pressed)
+		DebugLogger.log("Sell button connected", "TransactionHandler")
+		sell_button.visible = true  # Ensure clickable
+		sell_button.disabled = false  # Ensure not disabled
 	else:
 		DebugLogger.error("Sell button not found", "TransactionHandler")
 
 func set_inventories(player_inv: Inventory, shop_inv: Inventory):
 	player_inventory = player_inv
 	shop_inventory = shop_inv
+	DebugLogger.log("Inventories set - Player slots: " + str(player_inventory.slots.size()) + " Shop slots: " + str(shop_inventory.slots.size()), "TransactionHandler")
 
 func select_player_item(index: int):
 	selected_player_item = index
@@ -38,6 +47,7 @@ func select_shop_item(index: int):
 	DebugLogger.log("Selected shop item: " + str(index), "TransactionHandler")
 
 func _on_buy_pressed():
+	DebugLogger.log("Buy button pressed", "TransactionHandler")
 	if shop_inventory and selected_shop_item >= 0 and selected_shop_item < shop_inventory.slots.size():
 		var index = selected_shop_item
 		var item = shop_inventory.slots[index]
@@ -53,6 +63,8 @@ func _on_buy_pressed():
 		DebugLogger.warn("Buy failed - Invalid shop selection: " + str(selected_shop_item), "TransactionHandler")
 
 func _on_sell_pressed():
+	DebugLogger.log("Sell button pressed", "TransactionHandler")
+	DebugLogger.log("Player inventory: " + str(player_inventory) + " Selection: " + str(selected_player_item), "TransactionHandler")
 	if player_inventory and selected_player_item >= 0 and selected_player_item < player_inventory.slots.size():
 		var index = selected_player_item
 		var item = player_inventory.slots[index]
