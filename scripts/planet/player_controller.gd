@@ -29,7 +29,15 @@ func _ready():
 		print("Error: Player Inventory not found!")
 	else:
 		print("Player inventory slots in _ready: ", player_inventory.slots)
+	# Delay setting credits until trading_ui is ready
+	call_deferred("initialize_trading_ui")
+
+func initialize_trading_ui():
+	if trading_ui:
 		trading_ui.set_player_credits(credits)
+		print("Trading UI initialized with credits: ", credits)
+	else:
+		print("Error: trading_ui is null after deferred add")
 
 func _physics_process(delta):
 	if not is_on_floor():
