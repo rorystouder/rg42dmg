@@ -201,9 +201,12 @@ func create_base_planet_scene():
 	var inventory = Inventory.new()
 	inventory.name = "Inventory"
 	inventory.size = 10
+	inventory.add_item(load("res://items/supply_fuel.tres")) # Starting item
 	root.add_child(inventory)
 	inventory.owner = root
 
+	player.set_script(load("res://scripts/planet/player_controller.gd"))
+	mission_manager.set_script(load("res://scripts/planet/mission_manager.gd"))
 	return root
 
 func generate_planet_scene(planet_data, base_scene):

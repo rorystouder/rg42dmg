@@ -1,10 +1,10 @@
-[gd_resource type="Resource" script_class="ItemData" load_steps=2 format=3 uid="uid://dakonqbgmw4of"]
+[gd_resource type="Resource" script_class="ItemData" load_steps=2 format=3 uid="uid://bak3nffxsjo20"]
 
-[ext_resource type="Script" path="res://scripts/common/ItemData.gd" id="1_wy8pi"]
+[ext_resource type="Script" path="res://scripts/common/ItemData.gd" id="1_rmtaj"]
 
 [resource]
-script = ExtResource("1_wy8pi")
-name = ""
-price = 0
-type = ""
-description = ""
+script = ExtResource("1_rmtaj")
+name = "Laser Cannon"
+price = 200
+type = "weapon"
+description = "Basic ship weapon."

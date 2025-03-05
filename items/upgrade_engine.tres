@@ -1,10 +1,10 @@
-[gd_resource type="Resource" script_class="ItemData" load_steps=2 format=3 uid="uid://c8fisxafemyxr"]
+[gd_resource type="Resource" script_class="ItemData" load_steps=2 format=3 uid="uid://d3em25s13r3vx"]
 
-[ext_resource type="Script" path="res://scripts/common/ItemData.gd" id="1_s1p26"]
+[ext_resource type="Script" path="res://scripts/common/ItemData.gd" id="1_3enlv"]
 
 [resource]
-script = ExtResource("1_s1p26")
-name = ""
-price = 0
-type = ""
-description = ""
+script = ExtResource("1_3enlv")
+name = "Engine Boost"
+price = 300
+type = "upgrade"
+description = "Increases ship speed."

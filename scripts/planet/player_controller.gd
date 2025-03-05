@@ -9,6 +9,7 @@ extends CharacterBody3D
 var speed = walk_speed
 var trading_ui = null
 var player_inventory = null  # Add reference to track inventory
+var credits: int = 1000  # Player's credits
 
 func _ready():
 	var area = Area3D.new()
@@ -61,6 +62,7 @@ func _on_area_entered(area):
 		shop_inventory.owner = self
 		if player_inventory:
 			trading_ui.set_inventories(player_inventory, shop_inventory)
+			trading_ui.set_player_credits(credits)  # Sync credits
 			trading_ui.visible = true
 			get_tree().paused = true
 		else:
@@ -68,5 +70,6 @@ func _on_area_entered(area):
 
 func _input(event):
 	if event.is_action_pressed("ui_cancel") and trading_ui.visible:
+		credits = trading_ui.get_player_credits()  # Update player credits after trading
 		trading_ui.visible = false
 		get_tree().paused = false
