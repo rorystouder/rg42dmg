@@ -38,8 +38,14 @@ func _ready():
 		print("Error: Player Inventory not found!")
 	
 	# Connect to interaction for trading UI trigger
-	interaction.connect("open_trading_ui", _on_open_trading_ui)
-	call_deferred("initialize_trading_ui")
+	interaction = preload("res://scripts/planet/player/interaction.gd").new()
+	add_child(interaction)
+	interaction.setup(self, trading_ui)
+	if not interaction.is_connected("open_trading_ui", _on_open_trading_ui):
+		if interaction.connect("open_trading_ui", _on_open_trading_ui) == OK:
+			DebugLogger.log("Connected open_trading_ui signal", "PlayerController")
+		else:
+			DebugLogger.error("Failed to connect open_trading_ui signal", "PlayerController")
 
 func _physics_process(delta):
 	# Delegate physics processing to movement script
@@ -52,11 +58,13 @@ func initialize_trading_ui():
 
 # Signal handler from interaction.gd
 func _on_open_trading_ui(shop_inventory: Inventory):
-	if player_inventory:
-		print("Setting inventories - Player slots: ", player_inventory.slots)
-		trading_ui.set_inventories(player_inventory, shop_inventory)
-		trading_ui.set_player_credits(credits)
-		trading_ui.visible = true
-		get_tree().paused = true
-	else:
-		print("Error: Cannot open trading UI - player inventory is null")
+	DebugLogger.log("Trading outpost entered - Shop inventory received", "PlayerController")
+	# Temporarily disable trading UI logic until fixed
+	#if player_inventory:
+	#	print("Setting inventories - Player slots: ", player_inventory.slots)
+	#	trading_ui.set_inventories(player_inventory, shop_inventory)
+	#	trading_ui.set_player_credits(credits)
+	#	trading_ui.visible = true
+	#	get_tree().paused = true
+	#else:
+	#	print("Error: Cannot open trading UI - player inventory is null")
