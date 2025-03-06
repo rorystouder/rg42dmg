@@ -20,7 +20,7 @@ func _ready():
 	collision.shape.radius = 2.0
 	area.add_child(collision)
 	area.connect("area_entered", _on_area_entered)
-	trading_ui = preload("res://scenes/TradingUI.tscn").instantiate()
+	trading_ui = preload("res://scenes/trading/TradingUI.tscn").instantiate()
 	trading_ui.visible = false
 	get_viewport().call_deferred("add_child", trading_ui)
 	player_inventory = get_node_or_null("../Inventory")
@@ -64,6 +64,7 @@ func _physics_process(delta):
 	rotate_y(rotation_input * rotation_speed * delta)
 	move_and_slide()
 
+# res://scripts/planet/player_controller.gd
 func _on_area_entered(area):
 	if area.name == "InteractionArea" and area.get_parent().name == "TradingOutpost":
 		var shop_inventory = Inventory.new()

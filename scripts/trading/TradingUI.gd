@@ -1,8 +1,8 @@
 # res://scripts/trading/TradingUI.gd
 extends Control
 
-var player_item_list = null
-var shop_item_list = null
+var player_items_container = null
+var shop_items_container = null
 var currency_label = null
 var buy_button = null
 var sell_button = null
@@ -16,34 +16,36 @@ var transaction_handler = null
 var input_manager = null
 
 func _ready():
-	player_item_list = get_node_or_null("Panel/PlayerInventory/ItemList")
-	shop_item_list = get_node_or_null("Panel/ShopInventory/ItemList")
+	player_items_container = get_node_or_null("Panel/PlayerInventory/Items")
+	shop_items_container = get_node_or_null("Panel/ShopInventory/Items")
 	currency_label = get_node_or_null("Panel/CurrencyLabel")
 	buy_button = get_node_or_null("Panel/BuyButton")
 	sell_button = get_node_or_null("Panel/SellButton")
+	print("Player Items Container: ", player_items_container)
+	print("Shop Items Container: ", shop_items_container)
+	print("Currency Label: ", currency_label)
+	print("Buy Button: ", buy_button)
+	print("Sell Button: ", sell_button)
 
 	inventory_display = InventoryDisplay.new()
 	inventory_display.name = "InventoryDisplay"
 	add_child(inventory_display)
-	assert(inventory_display != null, "InventoryDisplay failed to initialize")
-	inventory_display.setup(player_item_list, shop_item_list, currency_label)
+	inventory_display.setup(player_items_container, shop_items_container, currency_label)
 
 	transaction_handler = TransactionHandler.new()
 	transaction_handler.name = "TransactionHandler"
 	add_child(transaction_handler)
-	assert(transaction_handler != null, "TransactionHandler failed to initialize")
 	transaction_handler.setup(buy_button, sell_button, self)
 
 	input_manager = InputManager.new()
 	input_manager.name = "InputManager"
 	add_child(input_manager)
-	assert(input_manager != null, "InputManager failed to initialize")
 	input_manager.setup(self)
 
-	if player_item_list:
-		player_item_list.visible = true
-	if shop_item_list:
-		shop_item_list.visible = true
+	if player_items_container:
+		player_items_container.visible = true
+	if shop_items_container:
+		shop_items_container.visible = true
 
 func set_inventories(player_inv: Inventory, shop_inv: Inventory):
 	player_inventory = player_inv

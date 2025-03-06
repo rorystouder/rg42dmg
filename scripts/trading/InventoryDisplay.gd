@@ -2,16 +2,18 @@
 extends Node
 class_name InventoryDisplay
 
-var player_item_list = null
-var shop_item_list = null
-var currency_label = null
+var player_items_container: VBoxContainer = null
+var shop_items_container: VBoxContainer = null
+var currency_label: Label = null
 var player_inventory: Inventory = null
 var shop_inventory: Inventory = null
 var credits: int = 0
+var player_item_buttons: Array = []  # Array of buttons
+var shop_item_buttons: Array = []    # Array of buttons
 
-func setup(player_list, shop_list, label):
-	player_item_list = player_list
-	shop_item_list = shop_list
+func setup(player_container: VBoxContainer, shop_container: VBoxContainer, label: Label):
+	player_items_container = player_container
+	shop_items_container = shop_container
 	currency_label = label
 	update_ui()
 
@@ -25,38 +27,39 @@ func set_player_credits(player_credits: int):
 	update_ui()
 
 func update_ui():
-	if not player_item_list or not shop_item_list or not currency_label:
+	if not player_items_container or not shop_items_container or not currency_label:
 		DebugLogger.error("UI elements missing", "InventoryDisplay")
 		return
-	for child in player_item_list.get_children():
-		child.queue_free()
-	for child in shop_item_list.get_children():
-		child.queue_free()
-	if player_inventory and player_inventory.slots and player_item_list:
-		for i in range(player_inventory.slots.size()):
+	
+	# Clear existing buttons
+	for button in player_item_buttons:
+		button.queue_free()
+	player_item_buttons.clear()
+	for button in shop_item_buttons:
+		button.queue_free()
+	shop_item_buttons.clear()
+	
+	# Populate player items
+	if player_inventory and player_inventory.slots:
+		for i in player_inventory.slots.size():
 			var item = player_inventory.slots[i]
 			var button = Button.new()
 			button.text = item.name + " (" + item.type + ")"
-			var handler = get_parent().get_node_or_null("TransactionHandler")
-			if handler:
-				button.connect("pressed", func(): handler.select_player_item(i))
-			else:
-				DebugLogger.error("TransactionHandler not found", "InventoryDisplay")
-			player_item_list.add_child(button)
-			button.owner = get_parent()
-			button.visible = true
-	if shop_inventory and shop_inventory.slots and shop_item_list:
-		for i in range(shop_inventory.slots.size()):
+			button.connect("pressed", func(): get_parent().get_node("TransactionHandler").select_player_item(i))
+			player_items_container.add_child(button)
+			player_item_buttons.append(button)
+			DebugLogger.log("Added player item button: " + item.name, "InventoryDisplay")
+	
+	# Populate shop items
+	if shop_inventory and shop_inventory.slots:
+		for i in shop_inventory.slots.size():
 			var item = shop_inventory.slots[i]
 			var button = Button.new()
 			button.text = item.name + " (" + item.type + ") - " + str(item.price) + "c"
-			var handler = get_parent().get_node_or_null("TransactionHandler")
-			if handler:
-				button.connect("pressed", func(): handler.select_shop_item(i))
-			else:
-				DebugLogger.error("TransactionHandler not found", "InventoryDisplay")
-			shop_item_list.add_child(button)
-			button.owner = get_parent()
-			button.visible = true
+			button.connect("pressed", func(): get_parent().get_node("TransactionHandler").select_shop_item(i))
+			shop_items_container.add_child(button)
+			shop_item_buttons.append(button)
+			DebugLogger.log("Added shop item button: " + item.name, "InventoryDisplay")
+	
 	if currency_label:
 		currency_label.text = "Credits: " + str(credits)
