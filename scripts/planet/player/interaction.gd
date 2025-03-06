@@ -4,6 +4,10 @@ extends Node
 # Signal emitted when player enters a trading outpost, passing the shop inventory
 signal open_trading_ui(shop_inventory: Inventory)
 
+func open_shop():
+	var shop_inventory = Inventory.new()
+	emit_signal("open_trading_ui", shop_inventory)
+
 var player: CharacterBody3D = null
 var trading_ui = null
 

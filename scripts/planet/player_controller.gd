@@ -61,10 +61,10 @@ func _on_open_trading_ui(shop_inventory: Inventory):
 	# Temporarily log shop inventory state until UI is fixed
 	if player_inventory:
 		# Disabled UI logic until TradingUI.tscn is corrected
-		#trading_ui.set_inventories(player_inventory, shop_inventory)
-		#trading_ui.set_player_credits(credits)
-		#trading_ui.visible = true
-		#get_tree().paused = true
+		trading_ui.set_inventories(player_inventory, shop_inventory)
+		trading_ui.set_player_credits(credits)
+		trading_ui.visible = true
+		get_tree().paused = true
 		DebugLogger.log("Player inventory ready - Slots: " + str(player_inventory.slots.size()), "PlayerController")
 	else:
 		DebugLogger.error("Cannot open trading UI - Player inventory is null", "PlayerController")
