@@ -26,29 +26,29 @@ func _ready():
 	buy_button = get_node_or_null("Panel/BuyButton")
 	sell_button = get_node_or_null("Panel/SellButton")
 	
-	# Log UI element status for debugging
+	# Log UI element status with node path context
 	if player_items_container:
-		DebugLogger.log("Player Items Container found", "TradingUI")
+		DebugLogger.log("Player Items Container found at Panel/PlayerInventory/Items", "TradingUI")
 	else:
-		DebugLogger.error("Player Items Container not found at Panel/PlayerInventory/Items", "TradingUI")
+		DebugLogger.error("Player Items Container not found at Panel/PlayerInventory/Items - Check TradingUI.tscn", "TradingUI")
 	if shop_items_container:
-		DebugLogger.log("Shop Items Container found", "TradingUI")
+		DebugLogger.log("Shop Items Container found at Panel/ShopInventory/Items", "TradingUI")
 	else:
-		DebugLogger.error("Shop Items Container not found at Panel/ShopInventory/Items", "TradingUI")
+		DebugLogger.error("Shop Items Container not found at Panel/ShopInventory/Items - Check TradingUI.tscn", "TradingUI")
 	if currency_label:
-		DebugLogger.log("Currency Label found", "TradingUI")
+		DebugLogger.log("Currency Label found at Panel/CurrencyLabel", "TradingUI")
 	else:
 		DebugLogger.error("Currency Label not found at Panel/CurrencyLabel", "TradingUI")
 	if buy_button:
-		DebugLogger.log("Buy Button found", "TradingUI")
+		DebugLogger.log("Buy Button found at Panel/BuyButton", "TradingUI")
 	else:
 		DebugLogger.error("Buy Button not found at Panel/BuyButton", "TradingUI")
 	if sell_button:
-		DebugLogger.log("Sell Button found", "TradingUI")
+		DebugLogger.log("Sell Button found at Panel/SellButton", "TradingUI")
 	else:
 		DebugLogger.error("Sell Button not found at Panel/SellButton", "TradingUI")
 	
-	# Initialize child components
+	# Initialize child components with null checks
 	inventory_display = InventoryDisplay.new()
 	inventory_display.name = "InventoryDisplay"
 	add_child(inventory_display)
@@ -67,22 +67,26 @@ func _ready():
 	input_manager.setup(self)
 	DebugLogger.log("InputManager component initialized", "TradingUI")
 	
-	# Ensure containers are visible if present
+	# Set visibility only if containers exist
 	if player_items_container:
 		player_items_container.visible = true
+	else:
+		DebugLogger.warn("Player Items Container null - Skipping visibility toggle", "TradingUI")
 	if shop_items_container:
 		shop_items_container.visible = true
+	else:
+		DebugLogger.warn("Shop Items Container null - Skipping visibility toggle", "TradingUI")
 
 # Sets the player and shop inventories for trading
 func set_inventories(player_inv: Inventory, shop_inv: Inventory):
 	player_inventory = player_inv
 	shop_inventory = shop_inv
-	inventory_display.set_inventories(player_inv, shop_inv)
-	transaction_handler.set_inventories(player_inv, shop_inv)
-	if player_inv and shop_inv:
+	if player_inv:
+		inventory_display.set_inventories(player_inv, shop_inv)
+		transaction_handler.set_inventories(player_inv, shop_inv)
 		DebugLogger.log("Inventories set - Player slots: " + str(player_inv.slots.size()) + ", Shop slots: " + str(shop_inv.slots.size()), "TradingUI")
 	else:
-		DebugLogger.error("Failed to set inventories - Player: " + str(player_inv) + ", Shop: " + str(shop_inv), "TradingUI")
+		DebugLogger.error("Player inventory is null - Cannot set inventories", "TradingUI")
 
 # Updates the player's credits
 func set_player_credits(player_credits: int):
