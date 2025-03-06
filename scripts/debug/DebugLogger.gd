@@ -1,16 +1,23 @@
 # res://scripts/debug/DebugLogger.gd
 extends Node
 
-var debug_enabled = true
+# Toggle for enabling/disabling debug output
+var debug_enabled: bool = true
 
-func log(message: String, category: String = "General"):
+# Logs a standard message
+func log(message: String, context: String = ""):
 	if debug_enabled:
-		print("[%s] %s" % [category, message])
+		var formatted_message = "[%s] %s" % [context, message] if context else message
+		print(formatted_message)
 
-func error(message: String, category: String = "Error"):
+# Logs a warning message
+func warn(message: String, context: String = ""):
 	if debug_enabled:
-		push_error("[%s] %s" % [category, message])
+		var formatted_message = "[%s] %s" % [context, message] if context else message
+		push_warning(formatted_message)
 
-func warn(message: String, category: String = "Warning"):
+# Logs an error message
+func error(message: String, context: String = ""):
 	if debug_enabled:
-		push_warning("[%s] %s" % [category, message])
+		var formatted_message = "[%s] %s" % [context, message] if context else message
+		push_error(formatted_message)
