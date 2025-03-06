@@ -34,7 +34,6 @@ func process(delta):
 		player.velocity.y -= gravity * delta
 	if Input.is_action_just_pressed("jump") and player.is_on_floor():
 		player.velocity.y = jump_velocity
-		DebugLogger.log("Jump triggered - Velocity Y: " + str(player.velocity.y), "Movement")
 	
 	# Determine base speed (sprint or walk)
 	speed = sprint_speed if Input.is_action_pressed("sprint") else walk_speed
@@ -51,7 +50,6 @@ func process(delta):
 	if direction:
 		player.velocity.x = direction.x * speed
 		player.velocity.z = direction.z * speed
-		DebugLogger.log("Moving - Direction: " + str(direction) + " Speed: " + str(speed), "Movement")
 	else:
 		player.velocity.x = move_toward(player.velocity.x, 0, speed)
 		player.velocity.z = move_toward(player.velocity.z, 0, speed)
@@ -64,7 +62,6 @@ func process(delta):
 		rotation_input -= 1.0
 	if rotation_input != 0.0:
 		player.rotate_y(rotation_input * rotation_speed * delta)
-		DebugLogger.log("Rotating - Input: " + str(rotation_input), "Movement")
 	
 	player.move_and_slide()
 
