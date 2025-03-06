@@ -6,5 +6,5 @@
 script = ExtResource("1_m6exa")
 name = "Fuel"
 price = 50
-type = "upgradesupply"
+type = "supply"
 description = "Fuel for your spaceship."

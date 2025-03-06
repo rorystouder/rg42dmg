@@ -8,9 +8,9 @@ func _run():
 		dir.make_dir("res://scenes/")
 
 	var root = Control.new()
-	root.name = "TradingUI"
 	root.anchor_right = 1.0
 	root.anchor_bottom = 1.0
+	root.name = "TradingUI"
 
 	var panel = Panel.new()
 	panel.name = "Panel"
@@ -40,7 +40,7 @@ func _run():
 	player_inventory.add_child(player_label)
 	player_label.owner = root
 
-	var player_item_list = VBoxContainer.new()
+	var player_item_list = ItemList.new()
 	player_item_list.name = "ItemList"
 	player_item_list.size = Vector2(200, 300)
 	player_item_list.visible = true
@@ -66,7 +66,7 @@ func _run():
 	shop_inventory.add_child(shop_label)
 	shop_label.owner = root
 
-	var shop_item_list = VBoxContainer.new()
+	var shop_item_list = ItemList.new()
 	shop_item_list.name = "ItemList"
 	shop_item_list.size = Vector2(200, 300)
 	shop_item_list.visible = true

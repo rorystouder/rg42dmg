@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://pdp4y627w6vt"]
+[gd_scene load_steps=15 format=3 uid="uid://ck47lpaiw7lr2"]
 
 [ext_resource type="Script" path="res://scripts/planet/player_controller.gd" id="1_c4oxq"]
 [ext_resource type="Script" path="res://scripts/planet/mission_manager.gd" id="2_d0m73"]
@@ -6,28 +6,28 @@
 [ext_resource type="Script" path="res://scripts/common/ItemData.gd" id="4_to8xj"]
 [ext_resource type="Resource" uid="uid://df1pi3ojenc4p" path="res://items/supply_fuel.tres" id="5_10fiv"]
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_vi1xi"]
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_g2oaa"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_bf36j"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jq7kl"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_nc5no"]
+[sub_resource type="BoxMesh" id="BoxMesh_citi6"]
 size = Vector3(100, 0.2, 100)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_41fms"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vvqh3"]
 albedo_color = Color(0.5, 0.5, 0.6, 1)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_un3f8"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_0eoir"]
 size = Vector3(100, 0.2, 100)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_4m2xq"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_j1e38"]
 size = Vector3(15, 10, 15)
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_do1jk"]
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_5x5ki"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_1f4po"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_o7gwt"]
 size = Vector3(5, 5, 5)
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_a5w1f"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_u03sr"]
 radius = 3.0
 
 [node name="Zeta Prime" type="Node3D"]
@@ -38,10 +38,10 @@ radius = 3.0
 script = ExtResource("1_c4oxq")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="PlanetScene/Player"]
-mesh = SubResource("CapsuleMesh_vi1xi")
+mesh = SubResource("CapsuleMesh_g2oaa")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PlanetScene/Player"]
-shape = SubResource("CapsuleShape3D_bf36j")
+shape = SubResource("CapsuleShape3D_jq7kl")
 
 [node name="Camera3D" type="Camera3D" parent="PlanetScene/Player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -51,11 +51,11 @@ current = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="PlanetScene/Ground"]
-mesh = SubResource("BoxMesh_nc5no")
-surface_material_override/0 = SubResource("StandardMaterial3D_41fms")
+mesh = SubResource("BoxMesh_citi6")
+surface_material_override/0 = SubResource("StandardMaterial3D_vvqh3")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PlanetScene/Ground"]
-shape = SubResource("BoxShape3D_un3f8")
+shape = SubResource("BoxShape3D_0eoir")
 
 [node name="MissionManager" type="Node" parent="PlanetScene"]
 script = ExtResource("2_d0m73")
@@ -67,28 +67,28 @@ slots = Array[ExtResource("4_to8xj")]([ExtResource("5_10fiv")])
 [node name="Factory" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 5, 10)
 
-[node name="@CSGBox3D@49197" type="CSGBox3D" parent="Factory"]
+[node name="@CSGBox3D@49644" type="CSGBox3D" parent="Factory"]
 size = Vector3(15, 10, 15)
 
-[node name="@CollisionShape3D@49198" type="CollisionShape3D" parent="Factory"]
-shape = SubResource("BoxShape3D_4m2xq")
+[node name="@CollisionShape3D@49645" type="CollisionShape3D" parent="Factory"]
+shape = SubResource("BoxShape3D_j1e38")
 
 [node name="Worker" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 1, 5)
 
-[node name="@MeshInstance3D@49199" type="MeshInstance3D" parent="Worker"]
-mesh = SubResource("CapsuleMesh_do1jk")
+[node name="@MeshInstance3D@49646" type="MeshInstance3D" parent="Worker"]
+mesh = SubResource("CapsuleMesh_5x5ki")
 
 [node name="TradingOutpost" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 2.5, -10)
 
-[node name="@CSGBox3D@49200" type="CSGBox3D" parent="TradingOutpost"]
+[node name="@CSGBox3D@49647" type="CSGBox3D" parent="TradingOutpost"]
 size = Vector3(5, 5, 5)
 
-[node name="@CollisionShape3D@49201" type="CollisionShape3D" parent="TradingOutpost"]
-shape = SubResource("BoxShape3D_1f4po")
+[node name="@CollisionShape3D@49648" type="CollisionShape3D" parent="TradingOutpost"]
+shape = SubResource("BoxShape3D_o7gwt")
 
 [node name="InteractionArea" type="Area3D" parent="TradingOutpost"]
 
-[node name="@CollisionShape3D@49202" type="CollisionShape3D" parent="TradingOutpost/InteractionArea"]
-shape = SubResource("SphereShape3D_a5w1f")
+[node name="@CollisionShape3D@49649" type="CollisionShape3D" parent="TradingOutpost/InteractionArea"]
+shape = SubResource("SphereShape3D_u03sr")

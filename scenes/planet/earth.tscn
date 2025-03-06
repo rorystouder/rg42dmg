@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://canhiye5pgds0"]
+[gd_scene load_steps=15 format=3 uid="uid://dhcr1t12mgy53"]
 
 [ext_resource type="Script" path="res://scripts/planet/player_controller.gd" id="1_epwfc"]
 [ext_resource type="Script" path="res://scripts/planet/mission_manager.gd" id="2_k5tqt"]

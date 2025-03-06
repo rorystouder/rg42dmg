@@ -197,11 +197,13 @@ func create_base_planet_scene():
 	root.add_child(mission_manager)
 	mission_manager.owner = root
 	
-	#Inventory
+	# Inventory
 	var inventory = Inventory.new()
 	inventory.name = "Inventory"
 	inventory.size = 10
-	inventory.add_item(load("res://items/supply_fuel.tres")) # Starting item
+	print("Adding Fuel to player inventory: ", load("res://items/supply_fuel.tres"))
+	inventory.add_item(load("res://items/supply_fuel.tres"))
+	print("Player inventory slots after adding: ", inventory.slots)
 	root.add_child(inventory)
 	inventory.owner = root
 
