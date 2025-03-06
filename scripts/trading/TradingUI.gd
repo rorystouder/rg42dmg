@@ -83,7 +83,7 @@ func _initialize_components():
 
 	# Pass ItemList nodes to setup()
 	if player_item_list and shop_item_list:
-		transaction_handler.setup(buy_button, sell_button, self, player_item_list, shop_item_list)
+		transaction_handler.setup(buy_button, sell_button, self, player_items_container, shop_items_container)
 		DebugLogger.log("TransactionHandler component initialized", "TradingUI")
 	else:
 		DebugLogger.error("Failed to initialize TransactionHandler - Player or Shop ItemList not found", "TradingUI")

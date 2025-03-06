@@ -54,14 +54,6 @@ text = "Shop"
 [node name="Items" type="VBoxContainer" parent="Panel/ShopInventory"]
 layout_mode = 2
 
-[node name="CurrencyLabel" type="Label" parent="Panel"]
-layout_mode = 0
-offset_left = 300.0
-offset_top = 10.0
-offset_right = 500.0
-offset_bottom = 50.0
-text = "Credits: 0"
-
 [node name="BuyButton" type="Button" parent="Panel"]
 layout_mode = 0
 offset_left = 800.0
@@ -81,3 +73,11 @@ offset_bottom = 500.0
 mouse_filter = 1
 action_mode = 0
 text = "Sell"
+
+[node name="CurrencyLabel" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 300.0
+offset_top = 10.0
+offset_right = 500.0
+offset_bottom = 50.0
+text = "Credits: 0"
