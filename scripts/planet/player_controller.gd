@@ -33,10 +33,12 @@ func _ready():
 	
 	# Trading UI setup (currently partially disabled)
 	player_inventory = get_node_or_null("../Inventory")
-	if player_inventory:
-		DebugLogger.log("Player inventory found with " + str(player_inventory.slots.size()) + " slots", "PlayerController")
+	if not player_inventory:
+		player_inventory = Inventory.new() # fall back if not found
+		add_child(player_inventory)
+		DebugLogger.log("Created ne player inventory", "PlayerController")
 	else:
-		DebugLogger.error("Player inventory not found", "PlayerController")
+		DebugLogger.error("Player inventory found with " + str(player_inventory.slots.size()) + " slots", "PlayerController")
 	
 	trading_ui = preload("res://scenes/trading/TradingUI.tscn").instantiate()
 	trading_ui.visible = false

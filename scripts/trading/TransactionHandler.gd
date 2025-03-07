@@ -58,32 +58,36 @@ func select_shop_item(index: int):
 
 func _on_buy_pressed() -> void:
 	DebugLogger.log("Buy button pressed - Shop selection: " + str(selected_shop_item), "TransactionHandler")
-	if shop_inventory and selected_shop_item >= 0 and selected_shop_item < shop_inventory.slots.size():
-		var index = selected_shop_item
-		var item = shop_inventory.slots[index]
-		if trading_ui.credits >= item.price and player_inventory.add_item(item):
+	if not shop_inventory or selected_shop_item < 0 or selected_shop_item >= shop_inventory.slots.size():
+		DebugLogger.warn("Buy failed - Invalid shop selection or inventory: " + str(selected_shop_item), "TransactionHandler")
+		return
+
+	var item = shop_inventory.slots[selected_shop_item]
+	if trading_ui.credits >= item.price:
+		if player_inventory.add_item(item.duplicate()):  # Add a copy to player
+			shop_inventory.remove_item(selected_shop_item)  # Remove from shop
 			trading_ui.credits -= item.price
-			shop_inventory.remove_item(index)
+			trading_ui.set_player_credits(trading_ui.credits)  # Update UI
 			selected_shop_item = -1
-			trading_ui.inventory_display.update_ui()
 			DebugLogger.log("Bought item: " + item.name + " New credits: " + str(trading_ui.credits), "TransactionHandler")
 		else:
-			DebugLogger.warn("Buy failed - Credits: " + str(trading_ui.credits) + " Price: " + str(item.price), "TransactionHandler")
+			DebugLogger.warn("Buy failed - Player inventory full", "TransactionHandler")
 	else:
-		DebugLogger.warn("Buy failed - Invalid shop selection: " + str(selected_shop_item) + " or shop_inventory: " + str(shop_inventory), "TransactionHandler")
+		DebugLogger.warn("Buy failed - Insufficient credits: " + str(trading_ui.credits) + " Price: " + str(item.price), "TransactionHandler")
 
 func _on_sell_pressed() -> void:
 	DebugLogger.log("Sell button pressed - Player selection: " + str(selected_player_item), "TransactionHandler")
-	if player_inventory and selected_player_item >= 0 and selected_player_item < player_inventory.slots.size():
-		var index = selected_player_item
-		var item = player_inventory.slots[index]
-		if shop_inventory.add_item(item):
-			trading_ui.credits += item.price / 2
-			player_inventory.remove_item(index)
-			selected_player_item = -1
-			trading_ui.inventory_display.update_ui()
-			DebugLogger.log("Sold item: " + item.name + " New credits: " + str(trading_ui.credits), "TransactionHandler")
-		else:
-			DebugLogger.warn("Sell failed - Shop inventory full", "TransactionHandler")
+	if not player_inventory or selected_player_item < 0 or selected_player_item >= player_inventory.slots.size():
+		DebugLogger.warn("Sell failed - Invalid player selection or inventory: " + str(selected_player_item), "TransactionHandler")
+		return
+
+	var item = player_inventory.slots[selected_player_item]
+	if shop_inventory.add_item(item.duplicate()):  # Add a copy to shop
+		player_inventory.remove_item(selected_player_item)  # Remove from player
+		var sell_price = item.price / 2  # Half price for selling
+		trading_ui.credits += sell_price
+		trading_ui.set_player_credits(trading_ui.credits)  # Update UI
+		selected_player_item = -1
+		DebugLogger.log("Sold item: " + item.name + " New credits: " + str(trading_ui.credits), "TransactionHandler")
 	else:
-		DebugLogger.warn("Sell failed - Invalid player selection: " + str(selected_player_item) + " or player_inventory: " + str(player_inventory), "TransactionHandler")
+		DebugLogger.warn("Sell failed - Shop inventory full", "TransactionHandler")
