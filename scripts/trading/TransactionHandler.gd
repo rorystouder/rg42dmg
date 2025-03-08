@@ -63,17 +63,17 @@ func _on_buy_pressed() -> void:
 		return
 
 	var item = shop_inventory.slots[selected_shop_item]
-	if trading_ui.credits >= item.price:
+	if trading_ui.player_controller.player_credits >= item.price:
 		if player_inventory.add_item(item.duplicate()):  # Add a copy to player
 			shop_inventory.remove_item(selected_shop_item)  # Remove from shop
-			trading_ui.credits -= item.price
-			trading_ui.set_player_credits(trading_ui.credits)  # Update UI
+			trading_ui.player_controller.player_credits -= item.price
+			trading_ui.set_player_credits(trading_ui.player_controller.player_credits)  # Update UI
 			selected_shop_item = -1
-			DebugLogger.log("Bought item: " + item.name + " New credits: " + str(trading_ui.credits), "TransactionHandler")
+			DebugLogger.log("Bought item: " + item.name + " New credits: " + str(trading_ui.player_controller.player_credits), "TransactionHandler")
 		else:
 			DebugLogger.warn("Buy failed - Player inventory full", "TransactionHandler")
 	else:
-		DebugLogger.warn("Buy failed - Insufficient credits: " + str(trading_ui.credits) + " Price: " + str(item.price), "TransactionHandler")
+		DebugLogger.warn("Buy failed - Insufficient credits: " + str(trading_ui.player_controller.player_credits) + " Price: " + str(item.price), "TransactionHandler")
 
 func _on_sell_pressed() -> void:
 	DebugLogger.log("Sell button pressed - Player selection: " + str(selected_player_item), "TransactionHandler")
@@ -85,9 +85,9 @@ func _on_sell_pressed() -> void:
 	if shop_inventory.add_item(item.duplicate()):  # Add a copy to shop
 		player_inventory.remove_item(selected_player_item)  # Remove from player
 		var sell_price = item.price / 2  # Half price for selling
-		trading_ui.credits += sell_price
-		trading_ui.set_player_credits(trading_ui.credits)  # Update UI
+		trading_ui.player_controller.player_credits += sell_price
+		trading_ui.set_player_credits(trading_ui.player_controller.player_credits)  # Update UI
 		selected_player_item = -1
-		DebugLogger.log("Sold item: " + item.name + " New credits: " + str(trading_ui.credits), "TransactionHandler")
+		DebugLogger.log("Sold item: " + item.name + " New credits: " + str(trading_ui.player_controller.player_credits), "TransactionHandler")
 	else:
 		DebugLogger.warn("Sell failed - Shop inventory full", "TransactionHandler")

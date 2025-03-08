@@ -1,6 +1,6 @@
 [gd_scene load_steps=16 format=3 uid="uid://bbcf7vxfwktrn"]
 
-[ext_resource type="Script" path="res://scripts/planet/player_controller.gd" id="1_de65v"]
+[ext_resource type="Script" path="res://scripts/planet/PlayerController.gd" id="1_de65v"]
 [ext_resource type="Script" path="res://scripts/planet/mission_manager.gd" id="2_uf5sd"]
 [ext_resource type="Script" path="res://scripts/common/Inventory.gd" id="3_fcjeg"]
 [ext_resource type="Script" path="res://scripts/common/ItemData.gd" id="4_jn6fe"]

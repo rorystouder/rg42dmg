@@ -1,6 +1,8 @@
 # res://scripts/trading/TradingUI.gd
 extends Control
 
+signal credits_changed(new_credits) # Signal to notigy credit changes
+
 var player_items_container: VBoxContainer = null
 var shop_items_container: VBoxContainer = null
 var currency_label: Label = null
@@ -9,7 +11,8 @@ var sell_button: Button = null
 
 var player_inventory: Inventory = null
 var shop_inventory: Inventory = null
-var credits: int = 0
+var player_controller: PlayerController = null
+# var credits: int # local variable for display purposes
 
 var inventory_display: InventoryDisplay = null
 var transaction_handler: TransactionHandler = null
@@ -86,11 +89,12 @@ func set_inventories(player_inv: Inventory, shop_inv: Inventory):
 		DebugLogger.log("Inventories set - Player slots: " + str(player_inv.slots.size()) + ", Shop slots: " + str(shop_inv.slots.size()), "TradingUI")
 	else:
 		DebugLogger.error("Invalid inventories - Player: " + str(player_inv) + ", Shop: " + str(shop_inv), "TradingUI")
+	pass
 
 func set_player_credits(player_credits: int):
-	credits = player_credits
-	inventory_display.set_player_credits(credits)
-	DebugLogger.log("Player credits updated to: " + str(credits), "TradingUI")
+	$Panel/CurrencyLabel.text = "Credits: " + str(player_credits)
+	emit_signal("credits_changed", player_credits)
+	DebugLogger.log("Player credits updated to: " + str(player_credits), "TradingUI")
 
 func get_player_credits() -> int:
-	return credits
+	return player_controller.player_credits

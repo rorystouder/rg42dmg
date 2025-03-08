@@ -47,6 +47,7 @@ func _on_area_entered(area):
 		
 		player.add_child(shop_inventory)
 		shop_inventory.owner = player
+		DebugLogger.log("About to emit open_trading_ui", "Interaction")
 		emit_signal("open_trading_ui", shop_inventory)
 		DebugLogger.log("Emitted open_trading_ui signal with shop inventory", "Interaction")
 	else:
